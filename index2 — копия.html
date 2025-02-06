@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evo</title>
+    <!-- Добавление шрифта Montserrat из Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Montserrat', sans-serif; /* Изменение шрифта */
+            overflow: hidden; /* Скрывает прокрутку, если контент больше, чем экран */
+        }
+        .video-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Масштабирует видео, чтобы заполнить область */
+            z-index: -1; /* Устанавливает видео на задний план */
+        }
+
+        /* Навигационный бар */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный фон */
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            position: relative;
+            z-index: 1;
+            font-weight: 200; /* ExtraLight 200 */
+            font-size: 1.2em;
+        }
+
+        /* Тонкая белая линия под баром с легким свечением */
+        .navbar::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px; /* Толщина линии */
+            background-color: white; /* Цвет линии */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.7); /* Легкое свечение */
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.6s, text-shadow 0.6s; /* Плавное изменение (0.6 секунды) */
+        }
+
+        .navbar a:hover {
+            color: white; /* Цвет текста остается белым */
+            text-shadow: 0 0 10px white, 0 0 20px white, 0 0 30px white; /* Белое свечение при наведении */
+        }
+
+        .navbar .logo img {
+            height: 40px; /* Высота логотипа */
+            width: auto; /* Ширина логотипа автоматически подстраивается */
+        }
+
+        .navbar .evo-text {
+            font-size: 1.2em;
+            font-weight: 600; /* SemiBold 600 */
+            margin-left: 10px;
+        }
+
+        header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: calc(100vh - 60px); /* Высота минус высота навигационного бара */
+            color: #ffffff;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-title {
+            font-size: 2em;
+            font-weight: 600; /* SemiBold 600 */
+            font-style: italic; /* Italic */
+            margin: 0;
+            position: relative;
+            padding: 10px 20px; /* Отступы вокруг текста */
+            margin-top: -20px; /* Поднимаем текст чуть выше */
+        }
+
+        .main-title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px; /* Закругленные углы */
+            z-index: -1; /* Фон находится позади текста */
+        }
+
+        .about {
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<video class="video-background" autoplay loop muted>
+    <source src="Black hole 10' 0.5 + st.mp4" type="video/mp4"> <!-- Замените 'your-video.mp4' на ваш файл видео -->
+    Ваш браузер не поддерживает видео.
+</video>
+
+<!-- Навигационный бар -->
+<div class="navbar">
+    <div class="logo"><img src="logo.png" alt="Evo Logo"></div>
+    <div class="nav-links">
+        <a href="#guides">Руководства</a>
+        <a href="#feedback">Обратная связь</a>
+        <a href="#installation">Установка</a>
+        <a href="#news">Новости</a>
+        <a href="#account">Аккаунт</a>
+    </div>
+    <div class="evo-text">Evo</div>
+</div>
+
+<header>
+    <h1 class="main-title" id="animated-text">Откройте для себя Evo</h1>
+</header>
+
+<div class="about" id="about">
+    <h2>О нас</h2>
+    <p>Мы - команда, создающая уникальные решения в сфере Нейросетей. Наша цель - предоставить наилучший опыт работы с Нейростеями. Присоединяйтесь к нам в нашем увлекательном путешествии!</p>
+</div>
+
+<script>
+    const texts = ["Откройте для себя Evo", "Создайте свою вселенную"];
+    let currentTextIndex = 0;
+    const titleElement = document.getElementById('animated-text');
+    let currentText = texts[currentTextIndex];
+
+    function eraseText() {
+        if (currentText.length > 0) {
+            currentText = currentText.slice(0, -1);
+            titleElement.textContent = currentText;
+            setTimeout(eraseText, 100);
+        } else {
+            currentTextIndex = (currentTextIndex + 1) % texts.length;
+            currentText = texts[currentTextIndex];
+            printText();
+        }
+    }
+
+    function printText() {
+        if (currentText.length > titleElement.textContent.length) {
+            titleElement.textContent += currentText[titleElement.textContent.length];
+            setTimeout(printText, 100);
+        } else {
+            setTimeout(eraseText, 1000);
+        }
+    }
+
+    // Start the animation after a short delay
+    setTimeout(printText, 1000);
+</script>
+
+</body>
+</html>
